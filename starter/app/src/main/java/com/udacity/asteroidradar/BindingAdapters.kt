@@ -1,8 +1,30 @@
 package com.udacity.asteroidradar
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
+import com.squareup.picasso.Picasso
+
+private const val TAG = "BindingAdapter"
+
+//Creating Picture of the Day
+@BindingAdapter("picOfTheDay")
+fun bindPictureOfTheDayImage(imageView: ImageView, pictureOfDay: PictureOfDay?) {
+    pictureOfDay?.let {
+        if(it.mediaType.equals("image")) {
+            Picasso.get()
+                .load(it.url)
+                .error(R.drawable.ic_broken_image)
+                .placeholder(R.drawable.loading_img)
+                .into(imageView)
+        } else {
+            Toast.makeText(imageView.context, "NASA does not have image for this ${it.title}", Toast.LENGTH_SHORT).show()
+            Log.w(TAG, "NASA does not have image for this ${it.title}")
+        }
+    }
+}
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
