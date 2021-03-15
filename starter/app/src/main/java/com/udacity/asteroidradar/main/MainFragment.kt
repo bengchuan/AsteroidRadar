@@ -1,9 +1,11 @@
 package com.udacity.asteroidradar.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
@@ -13,16 +15,25 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
+
         // Adding adapter for recyclerview
-        binding.asteroidRecycler.adapter = AsteroidListAdapter()
+        val adapter = AsteroidListAdapter(
+            AsteriodOnClickListener {
+                //On click, we will navigate to Asteriod Details
+                Log.i("MAIN", "Navigating to Asteriod Details for ${it.codename}")
+                findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
+            })
+        binding.asteroidRecycler.adapter = adapter
         return binding.root
     }
 

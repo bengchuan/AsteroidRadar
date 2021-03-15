@@ -6,6 +6,10 @@
         <variable
             name="asteriod"
             type="com.udacity.asteroidradar.Asteroid" />
+
+        <variable
+            name="asteriodOnClickListener"
+            type="com.udacity.asteroidradar.main.AsteriodOnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,7 +18,8 @@
         android:paddingStart="8dp"
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
-        android:paddingBottom="4dp">
+        android:paddingBottom="4dp"
+        android:onClick="@{() -> asteriodOnClickListener.onClick(asteriod)}">
 
         <TextView
             android:id="@+id/asteroidName"

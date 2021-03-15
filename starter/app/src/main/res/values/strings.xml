@@ -20,6 +20,8 @@
     <string name="this_is_nasa_s_picture_of_day_showing_nothing_yet">This is NASA\'s picture of day, showing nothing yet</string>
     <string name="nasa_picture_of_day_content_description_format">NASA\'s picture of day: %s</string>
 
+    <!-- Error Messages -->
+    <string name="error_unsupported_media_type">NASA does not have suitable Picture Of the Day image type to display </string>
     <string name="error_unable_to_load_pod">Unable to load Image of the day</string>
     <string name="error_unable_to_load_list">Unable to load Asteroid list: \n %s</string>
 </resources>

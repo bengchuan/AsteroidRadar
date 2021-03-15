@@ -3,11 +3,11 @@ package com.udacity.asteroidradar
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.udacity.asteroidradar.main.AsteroidListAdapter
+import com.udacity.asteroidradar.Constants.SUPPORTED_MEDIA_TYPE
 
 private const val TAG = "BindingAdapter"
 
@@ -15,15 +15,14 @@ private const val TAG = "BindingAdapter"
 @BindingAdapter("picOfTheDay")
 fun bindPictureOfTheDayImage(imageView: ImageView, pictureOfDay: PictureOfDay?) {
     pictureOfDay?.let {
-        if(it.mediaType.equals("image")) {
+        if (it.mediaType.toLowerCase().trim().equals(SUPPORTED_MEDIA_TYPE)) {
             Picasso.get()
                 .load(it.url)
                 .error(R.drawable.ic_broken_image)
                 .placeholder(R.drawable.loading_img)
                 .into(imageView)
         } else {
-            Toast.makeText(imageView.context, "NASA does not have image for this ${it.title}", Toast.LENGTH_SHORT).show()
-            Log.w(TAG, "NASA does not have image for this ${it.title}")
+            Log.w(TAG, "NASA does not have image for this '${it.title}'. Media Type is '${it.mediaType}'")
         }
     }
 }

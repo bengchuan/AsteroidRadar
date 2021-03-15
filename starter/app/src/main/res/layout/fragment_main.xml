@@ -35,6 +35,16 @@
                 app:srcCompat="@drawable/placeholder_picture_of_day" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:contentDescription="@{viewModel.pictureOfDayCaption}"
+                android:text="@string/error_unsupported_media_type"
+                android:visibility="@{viewModel.showUnsupportedMediaTypeErrorMessage}"
+                tools:text="@string/error_unsupported_media_type" />
+
+            <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
