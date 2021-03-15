@@ -21,7 +21,8 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
-
+        // Adding adapter for recyclerview
+        binding.asteroidRecycler.adapter = AsteroidListAdapter()
         return binding.root
     }
 

@@ -5,7 +5,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.udacity.asteroidradar.main.AsteroidListAdapter
 
 private const val TAG = "BindingAdapter"
 
@@ -23,6 +25,15 @@ fun bindPictureOfTheDayImage(imageView: ImageView, pictureOfDay: PictureOfDay?) 
             Toast.makeText(imageView.context, "NASA does not have image for this ${it.title}", Toast.LENGTH_SHORT).show()
             Log.w(TAG, "NASA does not have image for this ${it.title}")
         }
+    }
+}
+
+// List of Asteriods
+@BindingAdapter("asteroidList")
+fun bindAsteriodList(recyclerView: RecyclerView, data: List<Asteroid?>?) {
+    val adapter = recyclerView.adapter as AsteroidListAdapter
+    adapter.submitList(data) {
+        recyclerView.scrollToPosition(0)
     }
 }
 
