@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:contentDescription="@{viewModel.pictureOfDayCaption}"
-                android:text="@string/error_unsupported_media_type"
+                android:text="@string/error_unable_to_load_pod"
                 android:visibility="@{viewModel.showUnsupportedMediaTypeErrorMessage}"
                 tools:text="@string/error_unsupported_media_type" />
 
@@ -76,16 +76,15 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center|center_horizontal|center_vertical"
-            android:text="@{viewModel.asteroidListErrorMessage}"
             android:textAlignment="center"
             android:textColor="@color/potentially_hazardous"
-            android:visibility="@{viewModel.showAsteroidListErrorMessage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_main_image_of_the_day_layout"
             app:layout_constraintVertical_bias="0.0"
+            app:showLoadingAsteriodError="@{viewModel.asteriods}"
             tools:text="@string/error_unable_to_load_list" />
 
 

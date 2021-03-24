@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="asteroid"
             type="com.udacity.asteroidradar.Asteroid" />
@@ -55,7 +54,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{asteroid.closeApproachDate}"
+                        app:formatDate="@{asteroid.closeApproachDate}"
                         android:textColor="@color/default_text_color"
                         tools:text="2020-02-01" />
                 </LinearLayout>
