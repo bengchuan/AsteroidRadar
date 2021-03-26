@@ -29,7 +29,7 @@
             android:layout_marginTop="4dp"
             android:layout_weight="1"
             android:text="@{asteriod.codename}"
-            android:textColor="@color/potentially_hazardous"
+            android:textColor="@color/default_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="(2001 KB67)" />
@@ -41,8 +41,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_weight="1"
-            app:formatDate="@{asteriod.closeApproachDate}"
-            android:textColor="@color/potentially_hazardous"
+            android:text="@{asteriod.closeApproachDate}"
+            android:textColor="@color/default_text_color"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/asteroidName"
             tools:text="2020-02-08" />

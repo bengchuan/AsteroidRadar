@@ -1,29 +1,33 @@
 package com.udacity.asteroidradar.database
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.room.Room.databaseBuilder
 
 @Dao
 interface AsteroidDao {
-    @Query("SELECT * FROM databaseAsteroid ORDER BY closeApproachDate DESC")
-    fun getAsteriods(): LiveData<List<DatabaseAsteroid>>
 
-    @Query("SELECT * FROM databaseAsteroid WHERE closeApproachDate >= :currentDate ORDER BY closeApproachDate DESC")
-    fun getAsteriodsByWeek(currentDate: Long): LiveData<List<DatabaseAsteroid>>
+    // Delete Asteriods worker should remove the expired asteriods. We don't need to compare closeApproachDate
+    @Query("SELECT * FROM databaseAsteroid ORDER BY closeApproachDate DESC")
+    fun getAsteriods(): List<DatabaseAsteroid>
 
     @Query("SELECT * FROM databaseAsteroid WHERE closeApproachDate == :currentDate ORDER BY closeApproachDate DESC")
-    fun getAsteriodsByToday(currentDate: Long): LiveData<List<DatabaseAsteroid>>
+    fun getAsteriodsByToday(currentDate: String): List<DatabaseAsteroid>
 
-    @Query("DELETE from databaseAsteroid WHERE closeApproachDate < :currentDate")
+    @Query("SELECT * FROM databaseAsteroid WHERE isFavorite == 1")
+    fun getFavoriteAsteriods(): List<DatabaseAsteroid>
+
+    @Query("DELETE from databaseAsteroid WHERE closeApproachDateEpoch < :currentDate")
     fun deleteAsteriodsOlderThan(currentDate: Long)
+
+    @Update
+    fun updateAsteriod(databaseAstroid: DatabaseAsteroid)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(databaseAstroid: List<DatabaseAsteroid>)
 }
 
-@Database(entities = [DatabaseAsteroid::class], version = 1, exportSchema = false)
+@Database(entities = [DatabaseAsteroid::class], version = 3, exportSchema = false)
 abstract class AsteroidDatabase : RoomDatabase() {
     abstract val asteriodDao: AsteroidDao
 }

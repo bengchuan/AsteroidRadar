@@ -34,11 +34,23 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): ArrayList<Asteroid> {
                     .getDouble("astronomical")
                 val isPotentiallyHazardous = asteroidJson
                     .getBoolean("is_potentially_hazardous_asteroid")
+                val closeApproachDate = closeApproachData.getString("close_approach_date")
                 // Easier for date comparison when we use epoch time.
-                val closeApproachDate = closeApproachData.getLong("epoch_date_close_approach")
+                val closeApproachEpochDate = closeApproachData.getLong("epoch_date_close_approach")
+
+                // make our live simpler to set isFavorite to false by default
+                // before adding into the database.
                 val asteroid = Asteroid(
-                    id, codename, closeApproachDate, absoluteMagnitude,
-                    estimatedDiameter, relativeVelocity, distanceFromEarth, isPotentiallyHazardous
+                    id = id,
+                    codename = codename,
+                    closeApproachDate = closeApproachDate,
+                    closeApproachDateEpoch = closeApproachEpochDate,
+                    absoluteMagnitude = absoluteMagnitude,
+                    estimatedDiameter = estimatedDiameter,
+                    relativeVelocity = relativeVelocity,
+                    distanceFromEarth = distanceFromEarth,
+                    isPotentiallyHazardous = isPotentiallyHazardous,
+                    isFavorite = false
                 )
                 asteroidList.add(asteroid)
             }

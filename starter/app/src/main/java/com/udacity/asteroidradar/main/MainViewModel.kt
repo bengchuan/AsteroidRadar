@@ -10,13 +10,13 @@ import com.udacity.asteroidradar.Constants.SUPPORTED_MEDIA_TYPE
 import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.api.NasaApi
-import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.getAsteriodDatabase
+import com.udacity.asteroidradar.repository.AsteriodFilter
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
-class MainViewModel(application: Application) : AndroidViewModel(application)  {
+enum class PictureOfTheDayImageStatus { LOADING, ERROR, UNSUPPORTED_MEDIA_TYPE }
+class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val TAG = "MainViewModel"
 
     // Picture of the day
@@ -32,23 +32,35 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
     val pictureOfDayImageHolder: LiveData<Int>
         get() = _picOfTheDayErrorImageholder
 
-    // Near Earth Objects
-    val db = getAsteriodDatabase(application)
-    val asteroidRepo = AsteroidRepository(db)
-    val asteriods = asteroidRepo.asteriods
 
     val showUnsupportedMediaTypeErrorMessage = Transformations.map(pictureOfDay) {
-        if(!it.mediaType.toLowerCase().trim().equals(SUPPORTED_MEDIA_TYPE)) {
+        if (!it.mediaType.toLowerCase().trim().equals(SUPPORTED_MEDIA_TYPE)) {
             View.VISIBLE
         } else {
             View.GONE
         }
     }
 
+    private val _asteriods = MutableLiveData<List<Asteroid>>()
+    val asteriods: LiveData<List<Asteroid>>
+        get() = _asteriods
+
+    // Near Earth Objects
+    private val db = getAsteriodDatabase(application)
+    private val asteroidRepo = AsteroidRepository(db)
+
+
     init {
         getPictureOfTheDay()
+        getAsteriodsFilteredBy(AsteriodFilter.ALL)
     }
 
+
+    fun getAsteriodsFilteredBy(filter: AsteriodFilter) {
+        viewModelScope.launch {
+            _asteriods.value = asteroidRepo.getAsteriodsBy(filter)
+        }
+    }
 
     /**
      * GET picture of the day

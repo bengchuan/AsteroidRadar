@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
+import com.udacity.asteroidradar.repository.AsteriodFilter
 
 class MainFragment : Fragment() {
 
@@ -43,6 +44,14 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.getAsteriodsFilteredBy(
+            when (item.itemId) {
+                R.id.show_all_menu -> AsteriodFilter.ALL
+                R.id.show_favorite -> AsteriodFilter.FAVORITE
+                R.id.show_today -> AsteriodFilter.TODAY
+                else -> AsteriodFilter.ALL
+            }
+        )
         return true
     }
 }
