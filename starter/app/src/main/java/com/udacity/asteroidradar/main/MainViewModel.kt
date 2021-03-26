@@ -58,6 +58,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getAsteriodsFilteredBy(filter: AsteriodFilter) {
         viewModelScope.launch {
+            if (_asteriods.value == null) {
+                asteroidRepo.refreshAsteriods()
+            }
             _asteriods.value = asteroidRepo.getAsteriodsBy(filter)
         }
     }
